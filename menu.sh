@@ -1,10 +1,10 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
-# Instalacja pakietów
+# Sprawdzamy i instalujemy wymagane narzędzia w Termux
 clear
 echo "Sprawdzam, czy wymagane pakiety są zainstalowane..."
 
-# Instalowanie nmap, bluez, nsnake
+# Instalowanie nmap, bluez, nsnake (bez potrzeby roota)
 pkg install -y nmap bluez nsnake
 
 clear
@@ -28,22 +28,19 @@ select opcja in "WiFi" "Bluetooth" "Funny"; do
             clear
             echo -e "\e[1;34m[ WiFi MENU ]\e[0m"
             PS3="Wybierz opcję (1-3): "
-            select wifiopcja in "Deuther (demo)" "Spam (demo)" "Scan (działa z nmap)"; do
+            select wifiopcja in "Scan (Skanowanie sieci)" "Spam (Symulacja)" "Deauth (Symulacja)"; do
                 case $wifiopcja in
-                    "Deuther (demo)")
-                        echo "Uruchamianie deuther... (fikcyjne)"
-                        # W kontrolowanym środowisku można symulować działanie deautoryzacji, np. za pomocą narzędzi jak aireplay-ng, ale to działa tylko na własnej sieci!
-                        break
-                        ;;
-                    "Spam (demo)")
-                        echo "Uruchamianie WiFi spam... (fikcyjne)"
-                        # Możesz np. wysłać zapytania ARP do wszystkich urządzeń w sieci w kontrolowanym środowisku
-                        break
-                        ;;
-                    "Scan (działa z nmap)")
+                    "Scan (Skanowanie sieci)")
                         echo "Skanowanie sieci lokalnej..."
-                        # Skanowanie urządzeń w sieci lokalnej (np. Twojego routera)
                         nmap -sn 192.168.1.0/24
+                        break
+                        ;;
+                    "Spam (Symulacja)")
+                        echo "Symulowanie spamu... (brak rzeczywistego działania)"
+                        break
+                        ;;
+                    "Deauth (Symulacja)")
+                        echo "Symulowanie ataku deauth... (brak rzeczywistego działania)"
                         break
                         ;;
                     *)
@@ -57,14 +54,19 @@ select opcja in "WiFi" "Bluetooth" "Funny"; do
             clear
             echo -e "\e[1;35m[ Bluetooth MENU ]\e[0m"
             PS3="Wybierz opcję (1-3): "
-            select btopcja in "Spam (demo)" "Funny" "Scan (demo)"; do
+            select btopcja in "Scan (Skanowanie urządzeń Bluetooth)" "Spam (Symulacja)" "Funny (Zabawne opcje)"; do
                 case $btopcja in
-                    "Spam (demo)")
-                        echo "Wysyłanie bluetooth spam... (fikcyjne)"
-                        # Symulacja działania spamowania Bluetooth - np. za pomocą hcitool do wywołania zapytań
+                    "Scan (Skanowanie urządzeń Bluetooth)")
+                        echo "Skanowanie urządzeń Bluetooth..."
+                        # Komenda hcitool, nie wymaga roota w niektórych urządzeniach
+                        hcitool scan
                         break
                         ;;
-                    "Funny")
+                    "Spam (Symulacja)")
+                        echo "Symulowanie Bluetooth spam... (brak rzeczywistego działania)"
+                        break
+                        ;;
+                    "Funny (Zabawne opcje)")
                         clear
                         echo -e "\e[1;36m[ FUNNY MENU ]\e[0m"
                         PS3="Wybierz opcję (1-2): "
@@ -85,11 +87,6 @@ select opcja in "WiFi" "Bluetooth" "Funny"; do
                                     ;;
                             esac
                         done
-                        break
-                        ;;
-                    "Scan (demo)")
-                        echo "Skanowanie bluetooth... (fikcyjne)"
-                        # Możesz użyć `hcitool` lub innych narzędzi do skanowania urządzeń Bluetooth w kontrolowanym środowisku.
                         break
                         ;;
                     *)
