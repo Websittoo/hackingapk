@@ -1,12 +1,10 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
-# Sprawdzamy i instalujemy wymagane narzędzia w Termux
-clear
-echo "Sprawdzam, czy wymagane pakiety są zainstalowane..."
+# Definicja wersji skryptu
+VERSION="1.0.0"
+AUTHOR="Created by ApkModerZNJ (TikTok)"
 
-# Instalowanie nmap, bluez, nsnake (bez potrzeby roota)
-pkg install -y nmap bluez nsnake
-
+# Wyświetlanie wersji i podpisu
 clear
 echo -e "\e[1;32m"
 cat << "EOF"
@@ -18,6 +16,8 @@ cat << "EOF"
                                  |_|                
 EOF
 echo -e "\e[1;36m          >> Max H4c15m! (Bate) <<\e[0m"
+echo -e "\e[1;34mVersion: $VERSION\e[0m"
+echo -e "\e[1;33m$AUTHOR\e[0m"
 echo ""
 
 # Główne menu
@@ -58,7 +58,6 @@ select opcja in "WiFi" "Bluetooth" "Funny"; do
                 case $btopcja in
                     "Scan (Skanowanie urządzeń Bluetooth)")
                         echo "Skanowanie urządzeń Bluetooth..."
-                        # Komenda hcitool, nie wymaga roota w niektórych urządzeniach
                         hcitool scan
                         break
                         ;;
