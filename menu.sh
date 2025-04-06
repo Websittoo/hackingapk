@@ -1,6 +1,6 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#!/bin/bash
 
-# Definicja wersji skryptu
+# Wersja i autor
 VERSION="1.0.0"
 AUTHOR="Created by ApkModerZNJ (TikTok)"
 
@@ -21,25 +21,21 @@ echo -e "\e[1;33m$AUTHOR\e[0m"
 echo ""
 
 # Główne menu
-PS3="Wybierz opcję (1-3): "
-select opcja in "WiFi" "Bluetooth" "Funny"; do
+PS3="Wybierz opcję (1-4): "
+select opcja in "Test Wi-Fi" "Test Bluetooth" "Test podatności" "Testy DDoS (Symulacja)"; do
     case $opcja in
-        "WiFi")
+        "Test Wi-Fi")
             clear
-            echo -e "\e[1;34m[ WiFi MENU ]\e[0m"
+            echo -e "\e[1;34m[ TESTOWANIE Wi-Fi ]\e[0m"
             PS3="Wybierz opcję (1-3): "
-            select wifiopcja in "Scan (Skanowanie sieci)" "Spam (Symulacja)" "Deauth (Symulacja)"; do
+            select wifiopcja in "Skanowanie sieci Wi-Fi" "Testy deauth (Symulacja)" "Powrót"; do
                 case $wifiopcja in
-                    "Scan (Skanowanie sieci)")
-                        echo "Skanowanie sieci lokalnej..."
+                    "Skanowanie sieci Wi-Fi")
+                        echo "Skanowanie sieci Wi-Fi w lokalnej sieci..."
                         nmap -sn 192.168.1.0/24
                         break
                         ;;
-                    "Spam (Symulacja)")
-                        echo "Symulowanie spamu... (brak rzeczywistego działania)"
-                        break
-                        ;;
-                    "Deauth (Symulacja)")
+                    "Testy deauth (Symulacja)")
                         echo "Symulowanie ataku deauth... (brak rzeczywistego działania)"
                         break
                         ;;
@@ -50,42 +46,19 @@ select opcja in "WiFi" "Bluetooth" "Funny"; do
             done
             break
             ;;
-        "Bluetooth")
+        "Test Bluetooth")
             clear
-            echo -e "\e[1;35m[ Bluetooth MENU ]\e[0m"
+            echo -e "\e[1;35m[ TESTOWANIE Bluetooth ]\e[0m"
             PS3="Wybierz opcję (1-3): "
-            select btopcja in "Scan (Skanowanie urządzeń Bluetooth)" "Spam (Symulacja)" "Funny (Zabawne opcje)"; do
+            select btopcja in "Skanowanie urządzeń Bluetooth" "Testy Bluetooth (Symulacja)" "Powrót"; do
                 case $btopcja in
-                    "Scan (Skanowanie urządzeń Bluetooth)")
+                    "Skanowanie urządzeń Bluetooth")
                         echo "Skanowanie urządzeń Bluetooth..."
                         hcitool scan
                         break
                         ;;
-                    "Spam (Symulacja)")
-                        echo "Symulowanie Bluetooth spam... (brak rzeczywistego działania)"
-                        break
-                        ;;
-                    "Funny (Zabawne opcje)")
-                        clear
-                        echo -e "\e[1;36m[ FUNNY MENU ]\e[0m"
-                        PS3="Wybierz opcję (1-2): "
-                        select funopcja in "Snake (gra)" "Lotto (losowanie)"; do
-                            case $funopcja in
-                                "Snake (gra)")
-                                    nsnake
-                                    break
-                                    ;;
-                                "Lotto (losowanie)")
-                                    echo "Losuję liczby Lotto..."
-                                    for i in {1..6}; do echo -n "$((RANDOM % 49 + 1)) "; done
-                                    echo ""
-                                    break
-                                    ;;
-                                *)
-                                    echo "Niepoprawna opcja, spróbuj ponownie."
-                                    ;;
-                            esac
-                        done
+                    "Testy Bluetooth (Symulacja)")
+                        echo "Symulowanie ataków Bluetooth... (brak rzeczywistego działania)"
                         break
                         ;;
                     *)
@@ -95,27 +68,17 @@ select opcja in "WiFi" "Bluetooth" "Funny"; do
             done
             break
             ;;
-        "Funny")
+        "Test podatności")
             clear
-            echo -e "\e[1;36m[ FUNNY MENU ]\e[0m"
-            PS3="Wybierz opcję (1-2): "
-            select funopcja in "Snake (gra)" "Lotto (losowanie)"; do
-                case $funopcja in
-                    "Snake (gra)")
-                        nsnake
-                        break
-                        ;;
-                    "Lotto (losowanie)")
-                        echo "Losuję liczby Lotto..."
-                        for i in {1..6}; do echo -n "$((RANDOM % 49 + 1)) "; done
-                        echo ""
-                        break
-                        ;;
-                    *)
-                        echo "Niepoprawna opcja, spróbuj ponownie."
-                        ;;
-                esac
-            done
+            echo -e "\e[1;36m[ TESTY PODATNOŚCI ]\e[0m"
+            echo "Skanowanie otwartych portów..."
+            nmap -p 1-65535 localhost
+            break
+            ;;
+        "Testy DDoS (Symulacja)")
+            clear
+            echo -e "\e[1;31m[ TESTY DDoS - Symulacja ]\e[0m"
+            echo "Symulowanie ataku DDoS... (brak rzeczywistego działania)"
             break
             ;;
         *)
